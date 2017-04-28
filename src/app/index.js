@@ -1,7 +1,9 @@
 var React = require('react');
 var ReactDom = require('react-dom');
-
-
+require('./css/index.css');
+//Module requires
+var TodoItem = require('./todoitem');
+var AddItem = require('./addItem');
 
 
 //Create TodoComponent
@@ -25,6 +27,7 @@ var TodoComponent = React.createClass({
                 <ul>
                     {todos}
                 </ul>
+                <AddItem onAdd={this.onAdd}/>
             </div>
         );
     },//render
@@ -35,24 +38,12 @@ var TodoComponent = React.createClass({
             return item !== val;
         });
         this.setState({todos:updatedTodos});
-    }
-});
+    },
+    onAdd: function(item){
+        var todos = this.state.todos;
+        todos.push(item);
+        this.setState({todos:todos});
 
-//Create TodoItem component
-var TodoItem = React.createClass({
-    render:function(){
-        return (
-            <li>
-                <div className="todo-item">
-                    <span className="item-name">{this.props.item} !!</span>
-                    <span className="item-delete" onClick={this.handleDelete}>X</span>
-                </div>
-            </li>
-        );
-    }, 
-    //Custom Functions
-    handleDelete:function(){
-        this.props.onDelete(this.props.item);
     }
 });
 
